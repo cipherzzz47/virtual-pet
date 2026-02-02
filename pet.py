@@ -8,7 +8,7 @@ import os
 import winreg
 
 # ────────────────────────────────────────
-GIF_PATH = "Post by @felinerin · 1 image.gif"
+GIF_PATH = "Your .gif file"
 CHAT_URL = "https://grok.com/"
 WINDOW_GEOMETRY = "480x720+200+50"
 TRANSPARENT_COLOR = "#ff00ff"
@@ -79,7 +79,7 @@ gif_label.bind("<Button-1>", start_drag)
 gif_label.bind("<B1-Motion>", do_drag)
 
 # ────────────────────────────────────────
-# Right-click → quick kill menu
+# Right-click to quick kill menu
 def show_kill_menu(event):
     global kill_menu
     if 'kill_menu' in globals() and kill_menu.winfo_exists():
@@ -99,7 +99,7 @@ def show_kill_menu(event):
 gif_label.bind("<Button-3>", show_kill_menu)
 
 # ────────────────────────────────────────
-# Games list (edit paths here~)
+# Games list (edit paths here)
 GAMES = {
     "Game 1": r"C:\path\to\game1.exe",
     "Game 2": r"C:\path\to\game2.exe",
@@ -123,7 +123,7 @@ def launch_game(game_path):
         subprocess.Popen(game_path)
     except FileNotFoundError:
         print(f"Game not found: {game_path}")
-    # ^ intentionally **does not** close menus so you can launch many ♡
+    
 
 # ────────────────────────────────────────
 # Menu closing helpers
@@ -149,7 +149,7 @@ def close_all_menus():
 
 
 # ────────────────────────────────────────
-# Modern dropdown menu (main + games submenu)
+#  dropdown menu (main + games submenu)
 def create_menu(event, is_submenu=False):
     global main_menu, games_submenu
 
@@ -182,10 +182,10 @@ def create_menu(event, is_submenu=False):
         target = games_submenu = window
     else:
         buttons = [
-            ("Grok Chat ♡", open_grok),
-            ("YouTube ▶", open_youtube),
-            ("Launch Game 🎮", lambda: create_menu(event, is_submenu=True)),
-            ("Close ×", close_all_menus),
+            ("Grok Chat", open_grok),
+            ("YouTube ", open_youtube),
+            ("Launch Game ", lambda: create_menu(event, is_submenu=True)),
+            ("Close ", close_all_menus),
         ]
         target = main_menu = window
 
@@ -210,8 +210,9 @@ def create_menu(event, is_submenu=False):
         btn.bind("<Leave>",  lambda e, b=btn: b.configure(bg="#31334a", fg="#cdd6f4"))
 
 # ────────────────────────────────────────
-# Double-click → open main menu
+# Double-click to open main menu
 gif_label.bind("<Double-Button-1>", lambda e: create_menu(e))
 
 # ────────────────────────────────────────
+
 root.mainloop()
