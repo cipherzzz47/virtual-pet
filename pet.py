@@ -250,6 +250,9 @@ def show_kill_menu(event):
     kill_menu.configure(bg="#1e1e2e")
     kill_menu.geometry(f"+{event.x_root + 20}+{event.y_root + 20}")
 
+    make_draggable(kill_menu)
+
+
     frm = tk.Frame(kill_menu, bg="#1e1e2e")
     frm.pack(padx=8, pady=8)
 
@@ -381,6 +384,27 @@ def add_new_game():
     close_submenu()
 
 
+def make_draggable(win: tk.Toplevel) -> None:
+    """
+    Přidá k Toplevel oknu jednoduché přetahování.
+    Funkce funguje i pro okna vytvořená s `overrideredirect(True)`.
+    """
+    # uložíme počáteční offset (relativní k levému hornímu rohu okna)
+    def on_press(event):
+        win._drag_x = event.x_root - win.winfo_x()
+        win._drag_y = event.y_root - win.winfo_y()
+
+    # při pohybu myši okno posuneme podle offsetu
+    def on_motion(event):
+        new_x = event.x_root - win._drag_x
+        new_y = event.y_root - win._drag_y
+        win.geometry(f"+{new_x}+{new_y}")
+
+    # Bindujeme události na **whole window** (nejen na widget uvnitř)
+    win.bind("<Button-1>", on_press)
+    win.bind("<B1-Motion>", on_motion)
+
+
 def edit_existing_game():
     """Umožní uživateli změnit cestu u existující hry."""
     if not config["games"]:
@@ -442,6 +466,10 @@ def create_menu(event, is_submenu: bool = False):
     offset_x = 140 if is_submenu else 0
     offset_y = 50  if is_submenu else 0
     win.geometry(f"+{event.x_root + offset_x}+{event.y_root + offset_y}")
+
+
+    make_draggable(win)
+
 
     frm = tk.Frame(win, bg="#1e1e2e")
     frm.pack(padx=8, pady=8)
