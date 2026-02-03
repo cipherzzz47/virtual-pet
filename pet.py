@@ -28,7 +28,7 @@ BASE_PATH = get_base_path()
 CONFIG_PATH = (BASE_PATH.parent if getattr(sys, "frozen", False) else BASE_PATH) / "config.json"
 
 DEFAULT_CONFIG = {
-    "gif_path": "furina_idle.gif",
+    "gif_path": "you gif file",
     "grok_url": "https://grok.com/",
     "youtube_url": "https://youtube.com",
     "games": {
@@ -529,3 +529,4 @@ gif_label.bind("<Double-Button-1>", lambda e: create_menu(e))
 # 7️⃣  Hlavní smyčka
 # --------------------------------------------------------------
 root.mainloop()
+
